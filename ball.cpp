@@ -1,6 +1,7 @@
 #include <raylib.h>
 #include <iostream>
 #include "ball.hpp"
+#include "global.hpp"
 
 Ball::Ball(float x, float y, int radius, int speedX, int speedY)
 {
@@ -47,17 +48,20 @@ void Ball::update(Player &obj1, Computer &obj2)
 
     if (y + radius >= GetScreenHeight() || y - radius <= 0)
     {
+        PlaySound(snd::bounchBall);
         speedY *= -1;
     }
     else if (x + radius >= GetScreenWidth())
     {
         obj1.setScore(1);
         std::cout << "score player 1: " << obj1.getScore() << std::endl;
+        PlaySound(snd::scoringPlayer);
         resetBall(obj1, obj2);
     }
     else if (x - radius <= 0)
     {
         obj2.setScore(1);
+        PlaySound(snd::scoringComputer);
         std::cout << "score player 2: " << obj2.getScore() << std::endl;
         resetBall(obj1, obj2);
     }

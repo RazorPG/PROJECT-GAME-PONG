@@ -3,6 +3,7 @@
 
 #include "player.hpp"
 #include "computer.hpp"
+#include "global.hpp"
 
 class Computer;
 
