@@ -20,6 +20,10 @@ namespace snd
     extern Sound scoringPlayer;
     extern Sound scoringComputer;
     extern Sound bounchBall;
+    extern Sound lose;
+    extern Sound win;
+    extern Sound lounch;
+    extern Sound click;
 }
 
 // namespace img

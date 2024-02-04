@@ -24,6 +24,7 @@ int main()
 
     Texture2D skin1 = LoadTexture("image/paddleP1.png");
     Texture2D skin2 = LoadTexture("image/paddle.png");
+    Texture2D backgroundMenu = LoadTexture("image/backgroundGame.png");
 
     Ball *ball = new Ball(screenWidth / 2, screenHeight / 2, 20, 11, 12);
     Player *player = new Player(Vector2{20, screenHeight / 2 - 60}, Rectangle{0, 0, 25, 120}, 10, skin1);
@@ -34,6 +35,10 @@ int main()
     snd::bounchBall = LoadSound("music/tennis-ball-hit-151257.mp3");
     snd::scoringPlayer = LoadSound("music/score-sound-effect.mp3");
     snd::scoringComputer = LoadSound("music/sound-effect-rugi-dong.mp3");
+    snd::lose = LoadSound("music/spongebob-fail.mp3");
+    snd::win = LoadSound("music/ta-da_yrvBrlS.mp3");
+    snd::lounch = LoadSound("music/pew_pew-dknight556-1379997159.mp3");
+    snd::click = LoadSound("music/button-124476.mp3");
 
     Rectangle startButtonRect = {screenWidth / 2 - 200, screenHeight / 2 + 40, 400, 60};
     Rectangle exitButtonRect = {screenWidth / 2 - 200, screenHeight / 2 + 120, 400, 60};
@@ -46,6 +51,9 @@ int main()
     backsound.looping = true;
     PlayMusicStream(backsound);
     PlayMusicStream(soundMenu);
+
+    bool winSoundPlayed = false;
+    bool loseSoundPlayed = false;
 
     SetTargetFPS(90);
     // game loop
@@ -64,8 +72,9 @@ int main()
 
             BeginDrawing();
             ClearBackground(BLACK);
+            DrawTexture(backgroundMenu, 0, 0, WHITE);
 
-            DrawText("GAME PONG", screenWidth / 2 - MeasureText("GAME PONG", 40) / 2, screenHeight / 4, 40, WHITE);
+            DrawText("GAME PONG", screenWidth / 2 - MeasureText("GAME PONG", 40) / 2, 1.5 * screenHeight / 4, 40, GREEN);
             DrawText("credit by @rfd_hlmi08", 3.5 * screenWidth / 4 - MeasureText("credit by @rfd_hlmi08", 20) / 2, screenHeight - 20, 20, WHITE);
 
             DrawRectangleRec(startButtonRect, WHITE);
@@ -77,11 +86,12 @@ int main()
             // Button logic for the start menu
             if (CheckButtonPressed(startButtonRect))
             {
+                PlaySound(snd::click);
                 startMenu = false;
             }
             else if (CheckButtonPressed(exitButtonRect))
             {
-                break;
+                PlaySound(snd::click);
             }
 
             EndDrawing();
@@ -147,6 +157,17 @@ int main()
 
             if (player->getScore() == 10 || computer->getScore() == 10)
             {
+                if (player->getScore() > computer->getScore() && !winSoundPlayed)
+                {
+                    PlaySound(snd::win);
+                    winSoundPlayed = true;
+                }
+                else if (player->getScore() < computer->getScore() && !loseSoundPlayed)
+                {
+                    PlaySound(snd::lose);
+                    loseSoundPlayed = true;
+                }
+
                 gameover = true;
                 if (player->getScore() > computer->getScore())
                 {
@@ -169,6 +190,7 @@ int main()
             {
                 if (CheckButtonPressed(retryButtonRect))
                 {
+                    PlaySound(snd::click);
                     // Reset game variables
                     player->resetScore();
                     computer->resetScore();
@@ -176,6 +198,7 @@ int main()
                 }
                 else if (CheckButtonPressed(quitButtonRect))
                 {
+                    PlaySound(snd::click);
                     // Quit the game
                     break;
                 }

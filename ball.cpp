@@ -55,12 +55,14 @@ void Ball::update(Player &obj1, Computer &obj2)
     {
         obj1.setScore(1);
         std::cout << "score player 1: " << obj1.getScore() << std::endl;
+
         PlaySound(snd::scoringPlayer);
         resetBall(obj1, obj2);
     }
     else if (x - radius <= 0)
     {
         obj2.setScore(1);
+
         PlaySound(snd::scoringComputer);
         std::cout << "score player 2: " << obj2.getScore() << std::endl;
         resetBall(obj1, obj2);
@@ -69,12 +71,15 @@ void Ball::update(Player &obj1, Computer &obj2)
 
 void Ball::resetBall(Player &obj1, Computer &obj2)
 {
+    int speedChoices[2] = {-1, 1};
+    speedY *= speedChoices[GetRandomValue(0, 1)];
     if (obj1.isGoal() == true)
     {
         speedX *= -1;
         std::cout << "player 1 goal" << std::endl;
         x = obj2.getXpos() - getRadius() - 2;
         y = obj2.getYPos() + obj2.GetHeight() / 2;
+        PlaySound(snd::lounch);
     }
     else if (obj2.isGoal() == true)
     {
@@ -82,8 +87,6 @@ void Ball::resetBall(Player &obj1, Computer &obj2)
         std::cout << "player 2 goal" << std::endl;
         x = obj1.getXpos() + obj1.getWidth() + getRadius();
         y = obj1.getYPos() + obj1.GetHeight() / 2;
+        PlaySound(snd::lounch);
     }
-
-    int speedChoices[2] = {-1, 1};
-    speedY *= speedChoices[GetRandomValue(0, 1)];
 }

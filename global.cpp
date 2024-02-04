@@ -15,6 +15,10 @@ namespace snd
     Sound scoringPlayer = LoadSound("music/score-sound-effect.mp3");
     Sound scoringComputer = LoadSound("music/sound-effect-rugi-dong.mp3");
     Sound bounchBall = LoadSound("music/tennis-ball-hit-151257.mp3");
+    Sound lose = LoadSound("music/spongebob-fail.mp3");
+    Sound win = LoadSound("music/ta-da_yrvBrlS.mp3");
+    Sound lounch = LoadSound("music/pew_pew-dknight556-1379997159.mp3");
+    Sound click = LoadSound("music/button-124476.mp3");
 }
 
 // namespace img
