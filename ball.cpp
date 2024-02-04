@@ -38,7 +38,7 @@ float Ball::getRadius()
 
 void Ball::draw()
 {
-    DrawCircle(x, y, radius, WHITE);
+    DrawCircle(x, y, radius, GREEN);
 }
 
 void Ball::update(Player &obj1, Computer &obj2)

@@ -1,7 +1,8 @@
 #include <raylib.h>
 #include "computer.hpp"
+#include "global.hpp"
 
-Computer::Computer(float x, float y, float width, float height, int speed) : Player(x, y, width, height, speed)
+Computer::Computer(Vector2 position, Rectangle frame, int speed, Texture2D skin) : Player(position, frame, speed, skin)
 {
     this->goal = false;
     this->score = 0;
@@ -9,14 +10,19 @@ Computer::Computer(float x, float y, float width, float height, int speed) : Pla
 
 void Computer::update(Ball &obj)
 {
-    if (y + height / 2 > obj.getYPos())
+    if (this->position.y + frame.height / 2 > obj.getYPos())
     {
-        y -= speed;
+        this->position.y -= speed;
     }
 
-    else if (y + height / 2 < obj.getYPos())
+    else if (this->position.y + frame.height / 2 < obj.getYPos())
     {
-        y += speed;
+        this->position.y += speed;
     }
     limitMovement();
+}
+
+void Computer::draw()
+{
+    DrawTextureRec(this->skin, this->frame, this->position, clr::red);
 }

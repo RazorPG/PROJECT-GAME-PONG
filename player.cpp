@@ -1,25 +1,29 @@
 #include <raylib.h>
 #include <iostream>
 #include "player.hpp"
+#include "global.hpp"
 
 void Player::limitMovement()
 {
-    if (y <= 0)
+    if (position.y <= 0)
     {
-        y = 0;
+        position.y = 0;
     }
-    else if (y + height >= GetScreenHeight())
+    else if (position.y + frame.height >= GetScreenHeight())
     {
-        y = GetScreenHeight() - height;
+        position.y = GetScreenHeight() - frame.height;
     }
 }
 
-Player::Player(float x, float y, float width, float height, int speed)
+Player::Player(Vector2 position, Rectangle frame, int speed, Texture2D skin)
 {
-    this->x = x;
-    this->y = y;
-    this->width = width;
-    this->height = height;
+    this->position.x = position.x;
+    this->position.y = position.y;
+    this->frame.width = frame.width;
+    this->frame.height = frame.height;
+    this->frame.x = 0;
+    this->frame.y = 0;
+    this->skin = skin;
     this->speed = speed;
     this->goal = false;
     this->score = 0;
@@ -27,21 +31,21 @@ Player::Player(float x, float y, float width, float height, int speed)
 
 float Player::getXpos()
 {
-    return this->x;
+    return this->position.x;
 }
 float Player::getYPos()
 {
-    return this->y;
+    return this->position.y;
 }
 
 float Player::getWidth()
 {
-    return this->width;
+    return this->frame.width;
 }
 
 float Player::GetHeight()
 {
-    return this->height;
+    return this->frame.height;
 }
 
 float Player::getScore()
@@ -55,20 +59,25 @@ void Player::setScore(int score)
     this->score += score;
 }
 
+void Player::resetScore()
+{
+    this->score = 0;
+}
+
 void Player::draw()
 {
-    DrawRectangle(x, y, width, height, WHITE);
+    DrawTextureRec(this->skin, this->frame, this->position, clr::green);
 }
 
 void Player::update()
 {
     if (IsKeyDown(KEY_W))
     {
-        y -= speed;
+        this->position.y -= speed;
     }
     else if (IsKeyDown(KEY_S))
     {
-        y += speed;
+        this->position.y += speed;
     }
     limitMovement();
     goal = false;

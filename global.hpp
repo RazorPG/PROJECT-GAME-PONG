@@ -12,6 +12,7 @@ namespace clr
     extern Color green;
     extern Color red;
     extern Color gray;
+    extern Color grayLinght;
 }
 
 namespace snd
@@ -20,5 +21,10 @@ namespace snd
     extern Sound scoringComputer;
     extern Sound bounchBall;
 }
+
+// namespace img
+// {
+//     extern Texture2D skin;
+// }
 
 #endif
